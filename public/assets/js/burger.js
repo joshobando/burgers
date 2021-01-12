@@ -3,7 +3,7 @@ $(function () {
         event.preventDefault();
 
         var newBurger = {
-            burger_name: $("newburger")
+            burger_name: $("#newburger")
                 .val()
                 .trim(),
             devoured: 0
@@ -25,9 +25,9 @@ $(function () {
         var devouredState = {
             devoured: 1
         };
-        $.ajax("/api/burgers", {
+        $.ajax("/api/burgers/" + id, {
             type: "PUT",
-            data: newBurger
+            data: devouredState
         }).then(function () {
             console.log("Burger devoured");
             location.reload();

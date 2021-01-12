@@ -1,8 +1,8 @@
 var connection = require("../config/connections");
 
-function createQmarks(){
+function createQmarks(num){
     var arr = [];
-    for (var i = 0; i < Number; i++){
+    for (var i = 0; i < num; i++){
         arr.push("?");
     }
     return arr.toString();
@@ -16,7 +16,7 @@ function translateSql(obj){
             if(typeof value === "string" && value.indexOf(" ")>=0){
                 value = "'" + value + "'";
             }
-            arr.push(key + "=" + value)
+            arr.push(key + "=" + value);
         }
     }
     return arr.toString();
@@ -48,7 +48,7 @@ var orm = {
         var dbQuery = "UPDATE " + table + " SET" + translateSql(objColVals) + " WHERE " + condition;
 
         console.log(dbQuery);
-        connection.query(dbQuery, vals, function (err, res) {
+        connection.query(dbQuery, function (err, res) {
             if (err) {
                 throw err;
             }
@@ -59,7 +59,7 @@ var orm = {
         var dbQuery = "DELETE FROM " + table + " WHERE " + condition;
 
         console.log(dbQuery);
-        connection.query(dbQuery, vals, function (err, res) {
+        connection.query(dbQuery, function (err, res) {
             if (err) {
                 throw err;
             }
@@ -67,3 +67,4 @@ var orm = {
         });
     }
 };
+module.exports = orm;
