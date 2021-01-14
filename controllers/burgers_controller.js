@@ -12,30 +12,16 @@ router.get("/", function (req, res) {
         res.render("index", hdbrsObj);
     });
 
-    router.post("/api.burgers", function (req, res) {
-        burger.insertOne(
-            ["burger_name", "devoured"],
-            function (result) {
-                res.json({
-                    id: result.insertId
-                });
+    router.post("/api/burgers", function (req, res) {
+        burger.insertOne(req.body.burger_name, function(result) {
+                res.redirect("/");
             }
         );
     });
-    router.put("/api/burgers/:id", function (req, res) {
-        var condition = "id = " + req.params.id;
 
-        console.log("condition", condition);
-        burger.updateOne({
-            devoured: req.body.devoured
-        }, condition, function (
-            result
-        ) {
-            if (result, changedRows === 0) {
-                return res.status(404).end();
-            } else {
-                res.status(200).end();
-            }
+    router.put("/api/burgers/:id", function (req, res) {
+        burger.updateOne(req.params.id, function(result) {
+            res.sendStatus(200);
         });
     });
 
@@ -44,7 +30,7 @@ router.get("/", function (req, res) {
         console.log("condition", condition);
 
         burger.deleteOne(condition, function (result) {
-            if (result, changedRows === 0) {
+            if (result.changedRows === 0) {
                 return res.status(404).end();
             } else {
                 res.status(200).end();
